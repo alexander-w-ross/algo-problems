@@ -5,7 +5,7 @@
 
 const nums = [5, 6, 7, 2, 5];
 // using set
-var containsDuplicate = function (nums: number[]) {
+var containsDuplicate = function (nums) {
   const t = new Set(nums);
   return t.size === nums.length ? false : true;
 };
