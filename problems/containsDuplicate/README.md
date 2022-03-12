@@ -54,9 +54,7 @@ var containsDuplicate = function (nums) {
 2. This will automatically remove all duplicates
 3. Compare original length of `nums` to new `Set(nums)` length.
 
-### Tricks/Issues
-
-**Comments**
+### Comments
 
 - Use a set - that will remove all duplicates for you and then compare size.
 - Originally tried just setting `hash[val] = “”` and then checking if a key exists. This won't work because each new key/value in hashmap is referentially a different value (under the hood). So instead I just set the key to val and cast val as a string to make the comparison.
