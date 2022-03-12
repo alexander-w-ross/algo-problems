@@ -13,6 +13,11 @@ Input: nums[(1, 2, 3, 1)];
 Output: true;
 ```
 
+### Time/Space Complexity
+
+**Time Complexity** - `O(n)`
+**Space Complexity** - `O(n)`
+
 ### Successful Code
 
 ```jsx
