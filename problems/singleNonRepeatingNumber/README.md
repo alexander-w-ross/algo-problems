@@ -41,6 +41,11 @@ var singleNonRepeatingNumber = function (nums) {
 };
 ```
 
+### Time/Space Complexity
+
+**Time**: `O(n)`
+**Space**: `O(1)`
+
 ### Steps
 
 1. Use reduce and `XOR` to move through array and cancelling out all the same numbers
