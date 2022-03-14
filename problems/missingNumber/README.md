@@ -21,7 +21,7 @@ Explanation: n = 3 since there are 3 numbers, so all numbers are in the range [0
 
 ### Successful Code
 
-```jsx
+```js
 /**
  * @param {number[]} nums
  * @return {number}

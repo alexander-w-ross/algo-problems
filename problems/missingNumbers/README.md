@@ -28,7 +28,7 @@ Output: [2]
 
 ## Successful Code
 
-```jsx
+```js
 /**
  * @param {number[]} nums
  * @return {number[]}

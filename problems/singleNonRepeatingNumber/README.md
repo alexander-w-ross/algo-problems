@@ -31,7 +31,7 @@ Output: 1
 
 ## Solution/Code
 
-```jsx
+```js
 /**
  * @param {number[]} nums
  * @return {number}

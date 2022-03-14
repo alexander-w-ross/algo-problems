@@ -8,7 +8,7 @@ Given an integer array nums, return true if any value appears at least twice in 
 
 Example
 
-```jsx
+```js
 Input: nums[(1, 2, 3, 1)];
 Output: true;
 ```
@@ -20,7 +20,7 @@ Output: true;
 
 ### Successful Code
 
-```jsx
+```js
 /**
  * @param {number[]} nums
  * @return {boolean}
