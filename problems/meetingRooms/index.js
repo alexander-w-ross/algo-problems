@@ -24,3 +24,5 @@ meetingRooms([
   [7, 10],
   [2, 4],
 ]);
+
+console.log([].length);
