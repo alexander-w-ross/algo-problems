@@ -44,7 +44,12 @@ Output: "f"
 
 ### Time/Space Complexity
 
+**Iterative**
 **Time**: `O(n)`
+**Space**: `O(1)`
+
+**Recursive**
+**Time**: `O(logn)`
 **Space**: `O(1)`
 
 ### Successful Code
@@ -55,6 +60,7 @@ Output: "f"
  * @param {character} target
  * @return {character}
  */
+// iterative
 var nextGreatestLetter = function (letters, target) {
   let lastIndex = letters.length - 1;
   if (target < letters[0] || target >= letters[lastIndex] || target === "z")
@@ -65,12 +71,45 @@ var nextGreatestLetter = function (letters, target) {
     if (target >= curr && target < next) return next;
   }
 };
+// recursive
+var nextGreatestLetter = function (letters, target) {
+  if (letters.length === 1) {
+    return letters[0];
+  }
+
+  let left = 0;
+  let right = letters.length;
+
+  while (left <= right) {
+    let mid = left + Math.floor((right - left) / 2);
+    if (letters[mid] <= target) {
+      left = mid + 1;
+    } else {
+      right = mid - 1;
+    }
+  }
+  if (left === letters.length) {
+    return letters[0];
+  } else {
+    return letters[left];
+  }
+};
 ```
 
-### Steps
+### Steps - Iterative
 
 1. Return the first element **if**:
    - `target` is less than the first element, **or**
    - `target` is equal to or greater than the last element, **or**
    - `target` is equal to `z`, because it will always be the first element in array.
 2. Map through each element in array, if `target` is greater than `curr` value but less than `next`, return the next value.
+
+### Steps - Recursive
+
+1. Initalize `left` and `right` to the ends of the array
+2. Find the `midpoint` between the current `left` and `right`.
+3. If `target` is bigger than the value at the midpoint, move the `left` index to the `midpoint + 1`
+4. If `target` is less than the value at the midpoint, move the `right` index to the `midpoint - 1`
+5. Once `left === right`, exit while loop.
+6. If `left` is equal to the end of the array, then return the first element (because it loops around)
+7. Else return the value at that point.
