@@ -10,6 +10,29 @@
  * @param {ListNode} list2
  * @return {ListNode}
  */
+const mergeLists = (head1, head2) => {
+  if (!head1 && !head2) return null;
+  if (!head1 && head2) return head2;
+  if (!head2 && head1) return head1;
+  let curr1 = head1;
+  let curr2 = head2;
+  let tail = new Node(0);
+  let head = tail;
+
+  while (curr1 && curr2) {
+    if (curr1.val < curr2.val) {
+      tail.next = curr1;
+      curr1 = curr1.next;
+    } else {
+      tail.next = curr2;
+      curr2 = curr2.next;
+    }
+    tail = tail.next;
+  }
+  tail.next = curr1 || curr2;
+
+  return head.next;
+};
 // iterative
 // var mergeTwoLists = function (list1, list2) {
 //   let dummy = new ListNode(0, null);
