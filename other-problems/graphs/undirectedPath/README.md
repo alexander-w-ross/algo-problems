@@ -163,43 +163,32 @@ undirectedPath(edges, 'r', 't'); // -> true
 ## Successful Code
 
 ```js
-const hasPath = (graph, src, dst) => {
-  // iterative - depth
-  if (!graph || !src) return false;
-  if (src === dst) return true;
-  const stack = [src];
-
+const undirectedPath = (edges, nodeA, nodeB) => {
+  const graph = generateGraph(edges);
+  const stack = [nodeA];
+  const visitedNodes = new Set();
   while (stack.length > 0) {
-    const curr = stack.pop();
-    if (curr === dst) return true;
-
-    for (let neighbour of graph[curr]) {
-      stack.push(neighbour);
+    const current = stack.pop();
+    if (current === nodeB) return true;
+    visitedNodes.add(current);
+    for (let neighbor of graph[current]) {
+      if (!visitedNodes.has(neighbor)) stack.push(neighbor);
     }
   }
   return false;
+};
 
-  // iterative - breadth
-  if (!graph || !src) return false;
-  if (src === dst) return true;
-  const queue = [src];
-
-  while (queue.length > 0) {
-    const curr = queue.shift();
-    if (curr === dst) return true;
-
-    for (let neighbour of graph[curr]) {
-      queue.push(neighbour);
-    }
+const generateGraph = (edges) => {
+  const graph = new Object();
+  for (let edge of edges) {
+    const [node1, node2] = edge;
+    if (!(node1 in graph)) graph[node1] = [];
+    if (!(node2 in graph)) graph[node2] = [];
+    graph[node1].push(node2);
+    graph[node2].push(node1);
   }
-  return false;
 
-  // recursive
-  if (src === dst) return true;
-  for (let neighbour of graph[src]) {
-    if (hasPath(graph, neighbour, dst)) return true;
-  }
-  return false;
+  return graph;
 };
 ```
 
