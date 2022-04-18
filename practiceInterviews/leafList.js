@@ -1,3 +1,5 @@
+const { assert } = require("./utils");
+
 // Write a function, leafList, that takes in the root of a binary tree and returns an array containing the values of all leaf nodes in left-to-right order.
 class Node {
   constructor(val, left = null, right = null) {
@@ -5,14 +7,6 @@ class Node {
     this.left = left;
     this.right = right;
   }
-}
-
-function assert(array1, array2, message = "") {
-  console.assert(
-    array1.length === array2.length &&
-      array1.every((a1, i) => a1 === array2[i]),
-    message
-  );
 }
 
 function leafList(root) {
