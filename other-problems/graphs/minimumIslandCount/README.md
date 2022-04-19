@@ -1,8 +1,10 @@
-# Island Count
+# Minimum Island Count
 
 # Problem
 
-Write a function, *islandCount*, that takes in a grid containing Ws and Ls. W represents water and L represents land. The function should return the number of islands on the grid. An island is a vertically or horizontally connected region of land.
+Write a function, *minimumIsland*, that takes in a grid containing Ws and Ls. W represents water and L represents land. The function should return the size of the smallest island. An island is a vertically or horizontally connected region of land.
+
+You may assume that the grid contains at least one island.
 
 ### test_00:
 
@@ -16,7 +18,7 @@ const grid = [
   ['L', 'L', 'W', 'W', 'W'],
 ];
 
-islandCount(grid); // -> 3
+minimumIsland(grid); // -> 2
 
 ```
 
@@ -31,7 +33,7 @@ const grid = [
   ['W', 'W', 'L', 'L', 'L'],
 ];
 
-islandCount(grid); // -> 4
+minimumIsland(grid); // -> 1
 
 ```
 
@@ -44,80 +46,90 @@ const grid = [
   ['L', 'L', 'L'],
 ];
 
-islandCount(grid); // -> 1
+minimumIsland(grid); // -> 9
 
 ```
 
 ### test_03:
 
 ```
- const grid = [
+const grid = [
   ['W', 'W'],
+  ['L', 'L'],
   ['W', 'W'],
-  ['W', 'W'],
+  ['W', 'L']
 ];
 
-islandCount(grid); // -> 0
+minimumIsland(grid); // -> 1
 
 ```
 
 ## Successful Code
 
 ```js
-const islandCount = (grid) => {
+const minimumIsland = (grid) => {
   const visitedNodes = new Set();
-  let landCount = 0;
+  let currIslandSize = 0;
+  let minIslandSize = +Infinity;
+
   for (let rowIndex = 0; rowIndex < grid.length; rowIndex++) {
     for (let colIndex = 0; colIndex < grid[rowIndex].length; colIndex++) {
       const currNode = grid[rowIndex][colIndex];
       if (currNode === "W" || visitedNodes.has(`${[rowIndex, colIndex]}`))
         continue;
 
-      // start depth search
       const stack = [[rowIndex, colIndex]];
       while (stack.length > 0) {
-        const current = stack.pop();
-        visitedNodes.add(`${current}`);
-        const [currRow, currCol] = current;
+        const curr = stack.pop();
+        if (!visitedNodes.has(`${curr}`)) currIslandSize += 1;
+        visitedNodes.add(`${curr}`);
+        const [currRow, currCol] = curr;
 
         const canCheckForward = currCol + 1 <= grid[rowIndex].length - 1;
         const canCheckBackward = currCol - 1 >= 0;
-        const canCheckTop = currRow - 1 >= 0;
-        const canCheckBottom = currRow + 1 <= grid.length - 1;
+        const canCheckAbove = currRow - 1 >= 0;
+        const canCheckBelow = currRow + 1 <= grid.length - 1;
+
+        const forwardCoord = [currRow, currCol + 1];
+        const backwardCoord = [currRow, currCol - 1];
+        const aboveCoord = [currRow - 1, currCol];
+        const belowCoord = [currRow + 1, currCol];
 
         // forward
         if (
           canCheckForward &&
-          !visitedNodes.has(`${[currRow, currCol + 1]}`) &&
+          !visitedNodes.has(`${forwardCoord}`) &&
           grid[currRow][currCol + 1] === "L"
         )
-          stack.push([currRow, currCol + 1]);
+          stack.push(forwardCoord);
         // backward
         if (
           canCheckBackward &&
-          !visitedNodes.has(`${[currRow, currCol - 1]}`) &&
+          !visitedNodes.has(`${backwardCoord}`) &&
           grid[currRow][currCol - 1] === "L"
         )
-          stack.push([currRow, currCol - 1]);
-        // up
+          stack.push(backwardCoord);
+        // above
         if (
-          canCheckTop &&
-          !visitedNodes.has(`${[currRow - 1, currCol]}`) &&
+          canCheckAbove &&
+          !visitedNodes.has(`${aboveCoord}`) &&
           grid[currRow - 1][currCol] === "L"
         )
-          stack.push([currRow - 1, currCol]);
-        // down
+          stack.push(aboveCoord);
+        // below
         if (
-          canCheckBottom &&
-          !visitedNodes.has(`${[currRow + 1, currCol]}`) &&
+          canCheckBelow &&
+          !visitedNodes.has(`${belowCoord}`) &&
           grid[currRow + 1][currCol] === "L"
         )
-          stack.push([currRow + 1, currCol]);
+          stack.push(belowCoord);
       }
-      landCount += 1;
+      minIslandSize =
+        currIslandSize < minIslandSize ? currIslandSize : minIslandSize;
+      currIslandSize = 0;
     }
   }
-  return landCount;
+  return minIslandSize;
 };
 ```
 
@@ -131,7 +143,7 @@ const islandCount = (grid) => {
 ## Steps - Iterative - depth
 
 1. Set up a 2 for loops (nested) to hit each value in grid.
-2. Initialize a `visitedNodes` set and `landCount` variable.
+2. Initialize a `visitedNodes` set and `currIslandSize` variable.
 3. At each coordinate, if the value at that coordinate is a `W` or it
    has been visited, then continue to next coordinate.
 4. Otherwise you want to do a depth-first search, where you're pushing
@@ -141,7 +153,8 @@ const islandCount = (grid) => {
    _ to help with the checking of the boundaries, I set 4 variables that
    will either be true or false depending if you're going out of bounds or not
 5. Once you've exhausted all of the connected `L`s in one component, add one
-   to the `landCount`
+   to the `currIslandSize`
+6. Check to see if `currIslandSize` is less then the `minIslandSize`, if it is then update `minIslandSize`
 
 ## Comments
 
