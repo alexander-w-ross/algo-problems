@@ -81,48 +81,34 @@ const minimumIsland = (grid) => {
       const stack = [[rowIndex, colIndex]];
       while (stack.length > 0) {
         const curr = stack.pop();
-        if (!visitedNodes.has(`${curr}`)) currIslandSize += 1;
-        visitedNodes.add(`${curr}`);
         const [currRow, currCol] = curr;
+        if (!visitedNodes.has(`${[currRow, currCol]}`)) currIslandSize += 1;
+        visitedNodes.add(`${[currRow, currCol]}`);
 
-        const canCheckForward = currCol + 1 <= grid[rowIndex].length - 1;
-        const canCheckBackward = currCol - 1 >= 0;
-        const canCheckAbove = currRow - 1 >= 0;
-        const canCheckBelow = currRow + 1 <= grid.length - 1;
+        const deltas = [
+          [-1, 0],
+          [1, 0],
+          [0, -1],
+          [0, 1],
+        ];
+        for (const delta of deltas) {
+          const [deltaRow, deltaCol] = delta;
 
-        const forwardCoord = [currRow, currCol + 1];
-        const backwardCoord = [currRow, currCol - 1];
-        const aboveCoord = [currRow - 1, currCol];
-        const belowCoord = [currRow + 1, currCol];
+          const neighborRow = currRow + deltaRow;
+          const neighborCol = currCol + deltaCol;
 
-        // forward
-        if (
-          canCheckForward &&
-          !visitedNodes.has(`${forwardCoord}`) &&
-          grid[currRow][currCol + 1] === "L"
-        )
-          stack.push(forwardCoord);
-        // backward
-        if (
-          canCheckBackward &&
-          !visitedNodes.has(`${backwardCoord}`) &&
-          grid[currRow][currCol - 1] === "L"
-        )
-          stack.push(backwardCoord);
-        // above
-        if (
-          canCheckAbove &&
-          !visitedNodes.has(`${aboveCoord}`) &&
-          grid[currRow - 1][currCol] === "L"
-        )
-          stack.push(aboveCoord);
-        // below
-        if (
-          canCheckBelow &&
-          !visitedNodes.has(`${belowCoord}`) &&
-          grid[currRow + 1][currCol] === "L"
-        )
-          stack.push(belowCoord);
+          const rowInbounds = 0 <= neighborRow && neighborRow < grid.length;
+          const colInbounds =
+            0 <= neighborCol && neighborCol < grid[currRow].length;
+
+          if (
+            rowInbounds &&
+            colInbounds &&
+            !visitedNodes.has(`${[neighborRow, neighborCol]}`) &&
+            grid[neighborRow][neighborCol] === "L"
+          )
+            stack.push([neighborRow, neighborCol]);
+        }
       }
       minIslandSize =
         currIslandSize < minIslandSize ? currIslandSize : minIslandSize;

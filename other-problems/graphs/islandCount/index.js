@@ -14,39 +14,39 @@ const islandCount = (grid) => {
         visitedNodes.add(`${current}`);
         const [currRow, currCol] = current;
 
-        const canCheckForward = currCol + 1 <= grid[rowIndex].length - 1;
-        const canCheckBackward = currCol - 1 >= 0;
-        const canCheckTop = currRow - 1 >= 0;
-        const canCheckBottom = currRow + 1 <= grid.length - 1;
+        // const canCheckForward = currCol + 1 <= grid[rowIndex].length - 1;
+        // const canCheckBackward = currCol - 1 >= 0;
+        // const canCheckTop = currRow - 1 >= 0;
+        // const canCheckBottom = currRow + 1 <= grid.length - 1;
 
-        // forward
-        if (
-          canCheckForward &&
-          !visitedNodes.has(`${[currRow, currCol + 1]}`) &&
-          grid[currRow][currCol + 1] === "L"
-        )
-          stack.push([currRow, currCol + 1]);
-        // backward
-        if (
-          canCheckBackward &&
-          !visitedNodes.has(`${[currRow, currCol - 1]}`) &&
-          grid[currRow][currCol - 1] === "L"
-        )
-          stack.push([currRow, currCol - 1]);
-        // up
-        if (
-          canCheckTop &&
-          !visitedNodes.has(`${[currRow - 1, currCol]}`) &&
-          grid[currRow - 1][currCol] === "L"
-        )
-          stack.push([currRow - 1, currCol]);
-        // down
-        if (
-          canCheckBottom &&
-          !visitedNodes.has(`${[currRow + 1, currCol]}`) &&
-          grid[currRow + 1][currCol] === "L"
-        )
-          stack.push([currRow + 1, currCol]);
+        // // forward
+        // if (
+        //   canCheckForward &&
+        //   !visitedNodes.has(`${[currRow, currCol + 1]}`) &&
+        //   grid[currRow][currCol + 1] === "L"
+        // )
+        //   stack.push([currRow, currCol + 1]);
+        // // backward
+        // if (
+        //   canCheckBackward &&
+        //   !visitedNodes.has(`${[currRow, currCol - 1]}`) &&
+        //   grid[currRow][currCol - 1] === "L"
+        // )
+        //   stack.push([currRow, currCol - 1]);
+        // // up
+        // if (
+        //   canCheckTop &&
+        //   !visitedNodes.has(`${[currRow - 1, currCol]}`) &&
+        //   grid[currRow - 1][currCol] === "L"
+        // )
+        //   stack.push([currRow - 1, currCol]);
+        // // down
+        // if (
+        //   canCheckBottom &&
+        //   !visitedNodes.has(`${[currRow + 1, currCol]}`) &&
+        //   grid[currRow + 1][currCol] === "L"
+        // )
+        //   stack.push([currRow + 1, currCol]);
       }
       landCount += 1;
     }
