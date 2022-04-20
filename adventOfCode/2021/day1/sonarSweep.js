@@ -146,11 +146,11 @@ const input = [
 ];
 const input2 = [199, 200, 208, 210, 200, 207, 240, 269, 260, 263];
 
-function sonarSweep(measurements) {
+function partOne(measurements) {
   let count = 0;
   for (let i = 1; i < measurements.length; i++) {
     if (measurements[i] > measurements[i - 1]) count++;
   }
   return count;
 }
-console.log(sonarSweep(input));
+console.log(partOne(input));
