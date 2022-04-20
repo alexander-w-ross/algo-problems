@@ -1,4 +1,4 @@
-const input = [
+export const measurements = [
   141, 152, 164, 163, 164, 179, 210, 209, 208, 236, 227, 228, 227, 223, 226,
   225, 228, 234, 218, 215, 206, 215, 218, 215, 209, 226, 233, 236, 234, 232,
   230, 225, 226, 224, 216, 213, 221, 224, 225, 228, 227, 198, 196, 190, 167,
@@ -144,13 +144,6 @@ const input = [
   2645, 2651, 2652, 2658, 2657, 2627, 2628, 2642, 2631, 2632, 2634, 2639, 2648,
   2647, 2648, 2649, 2654, 2655, 2660, 2671, 2682,
 ];
-const input2 = [199, 200, 208, 210, 200, 207, 240, 269, 260, 263];
-
-function partOne(measurements) {
-  let count = 0;
-  for (let i = 1; i < measurements.length; i++) {
-    if (measurements[i] > measurements[i - 1]) count++;
-  }
-  return count;
-}
-console.log(partOne(input));
+export const testMeasurements = [
+  199, 200, 208, 210, 200, 207, 240, 269, 260, 263,
+];

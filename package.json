@@ -1,0 +1,9 @@
+{
+  "name": "algo-problems",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:alexander-w-ross/algo-problems.git",
+  "author": "Alex Ross <alexander.w.rosss@gmail.com>",
+  "license": "MIT",
+  "type": "module"
+}
