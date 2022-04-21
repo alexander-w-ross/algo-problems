@@ -3,50 +3,42 @@ const islandCount = (grid) => {
   let landCount = 0;
   for (let rowIndex = 0; rowIndex < grid.length; rowIndex++) {
     for (let colIndex = 0; colIndex < grid[rowIndex].length; colIndex++) {
-      const currNode = grid[rowIndex][colIndex];
-      if (currNode === "W" || visitedNodes.has(`${[rowIndex, colIndex]}`))
+      if (
+        grid[rowIndex][colIndex] === "W" ||
+        visitedNodes.has(`${[rowIndex, colIndex]}`)
+      )
         continue;
 
       // start depth search
       const stack = [[rowIndex, colIndex]];
       while (stack.length > 0) {
         const current = stack.pop();
-        visitedNodes.add(`${current}`);
         const [currRow, currCol] = current;
+        visitedNodes.add(`${current}`);
 
-        // const canCheckForward = currCol + 1 <= grid[rowIndex].length - 1;
-        // const canCheckBackward = currCol - 1 >= 0;
-        // const canCheckTop = currRow - 1 >= 0;
-        // const canCheckBottom = currRow + 1 <= grid.length - 1;
+        const deltas = [
+          [-1, 0],
+          [1, 0],
+          [0, -1],
+          [0, 1],
+        ];
+        for (const delta of deltas) {
+          const [rowDelta, colDelta] = delta;
+          const neighborRow = currRow + rowDelta;
+          const neighborCol = currCol + colDelta;
 
-        // // forward
-        // if (
-        //   canCheckForward &&
-        //   !visitedNodes.has(`${[currRow, currCol + 1]}`) &&
-        //   grid[currRow][currCol + 1] === "L"
-        // )
-        //   stack.push([currRow, currCol + 1]);
-        // // backward
-        // if (
-        //   canCheckBackward &&
-        //   !visitedNodes.has(`${[currRow, currCol - 1]}`) &&
-        //   grid[currRow][currCol - 1] === "L"
-        // )
-        //   stack.push([currRow, currCol - 1]);
-        // // up
-        // if (
-        //   canCheckTop &&
-        //   !visitedNodes.has(`${[currRow - 1, currCol]}`) &&
-        //   grid[currRow - 1][currCol] === "L"
-        // )
-        //   stack.push([currRow - 1, currCol]);
-        // // down
-        // if (
-        //   canCheckBottom &&
-        //   !visitedNodes.has(`${[currRow + 1, currCol]}`) &&
-        //   grid[currRow + 1][currCol] === "L"
-        // )
-        //   stack.push([currRow + 1, currCol]);
+          const rowInbounds = 0 <= neighborRow && neighborRow < grid.length;
+          const colInbounds =
+            0 <= neighborCol && neighborCol < grid[currRow].length;
+
+          if (
+            rowInbounds &&
+            colInbounds &&
+            grid[neighborRow][neighborCol] === "L" &&
+            !visitedNodes.has(`${[neighborRow, neighborCol]}`)
+          )
+            stack.push([neighborRow, neighborCol]);
+        }
       }
       landCount += 1;
     }
@@ -71,4 +63,4 @@ const grid = [
   ["W", "W", "L", "L", "L"],
 ];
 
-islandCount(grid); // -> 4
+console.log(islandCount(grid)); // -> 4
